@@ -1,7 +1,6 @@
 {
     "name": "ocdladefense/lib-oauth-config",
     "description": "Classes to enable parsing of oauth schemas.",
-    "type": "wordpress-theme",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {},
