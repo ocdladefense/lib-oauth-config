@@ -36,20 +36,22 @@ class OAuthConfig {
 
     public function getFlowConfig($flow = "usernamepassword"){
 
+        $flowConfigs = $this->config["auth"]["oauth"];
+
         switch($flow){
             
             case "usernamepassword":
                 $tmp = array(
-                    "username" => $this->config["auth"]["oauth"]["usernamepassword"]["username"],
-                    "password" => $this->config["auth"]["oauth"]["usernamepassword"]["password"],
-                    "securityToken" => $this->config["auth"]["oauth"]["usernamepassword"]["security_token"]
+                    "username" => $flowConfigs["usernamepassword"]["username"],
+                    "password" => $flowConfigs["usernamepassword"]["password"],
+                    "securityToken" => $flowConfigs["usernamepassword"]["security_token"]
                 );
                 break;
             case "webserver":
                 $tmp = array(
-                    "auth_url" => $this->config["auth"]["oauth"]["webserver"]["auth_url"],
-                    "redirect_url" => $this->config["auth"]["oauth"]["webserver"]["redirect_url"],
-                    "callback_url" => $this->config["auth"]["oauth"]["webserver"]["callback_url"]
+                    "auth_url" => $flowConfigs["webserver"]["auth_url"],
+                    "redirect_url" => $flowConfigs["webserver"]["redirect_url"],
+                    "callback_url" => $flowConfigs["webserver"]["callback_url"]
                 );
                 break;
 
