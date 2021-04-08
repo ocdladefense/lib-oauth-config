@@ -16,10 +16,6 @@ class OAuthConfig {
 
     private $clientSecret;
 
-    private $callbackUrl;
-
-    private $tokenUrl;
-
     private $authorizationCode;
 
 
@@ -31,7 +27,6 @@ class OAuthConfig {
         $this->sandbox = $config["sandbox"];
         $this->clientId = $config["client_id"];
         $this->clientSecret = $config["client_secret"];
-        $this->tokenUrl = $config["token_url"];
     }
 
     public function getFlowConfig($flow = "usernamepassword"){
@@ -44,14 +39,16 @@ class OAuthConfig {
                 $tmp = array(
                     "username" => $flowConfigs["usernamepassword"]["username"],
                     "password" => $flowConfigs["usernamepassword"]["password"],
-                    "securityToken" => $flowConfigs["usernamepassword"]["security_token"]
+                    "securityToken" => $flowConfigs["usernamepassword"]["security_token"],
+                    "token_url"     => $flowConfigs["usernamepassword"]["token_url"]
                 );
                 break;
             case "webserver":
                 $tmp = array(
                     "auth_url" => $flowConfigs["webserver"]["auth_url"],
                     "redirect_url" => $flowConfigs["webserver"]["redirect_url"],
-                    "callback_url" => $flowConfigs["webserver"]["callback_url"]
+                    "callback_url" => $flowConfigs["webserver"]["callback_url"],
+                    "token_url"     => $flowConfigs["webserver"]["token_url"]
                 );
                 break;
 
@@ -74,11 +71,6 @@ class OAuthConfig {
     public function getClientSecret(){
 
         return $this->clientSecret;
-    }
-
-    public function getTokenUrl(){
-
-        return $this->tokenUrl;
     }
 
     public function getConfig(){

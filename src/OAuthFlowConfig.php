@@ -10,6 +10,8 @@ class OAuthFlowConfig {
 
     private $securityToken;
 
+    private $tokenUrl;
+
     private $authorizationUrl;
 
     private $redirectUrl;
@@ -24,6 +26,7 @@ class OAuthFlowConfig {
         $this->authorizationUrl = $config["auth_url"];
         $this->redirectUrl = $config["redirect_url"];
         $this->callbackUrl = $config["callback_url"];
+        $this->tokenUrl = $config["token_url"];
     }
 
 
@@ -60,5 +63,10 @@ class OAuthFlowConfig {
     public function getCallbackUrl(){
 
         return $this->callbackUrl;
+    }
+
+    public function getTokenUrl(){
+
+        return $this->tokenUrl;
     }
 }
