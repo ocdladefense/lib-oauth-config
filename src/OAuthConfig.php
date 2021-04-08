@@ -48,8 +48,8 @@ class OAuthConfig {
             case "webserver":
                 $tmp = array(
                     "auth_url" => $this->config["auth"]["oauth"]["webserver"]["auth_url"],
-                    "auth_redirect_url" => $this->config["auth"]["oauth"]["webserver"]["auth_redirect_url"],
-                    "final_redirect_url" => $this->config["auth"]["oauth"]["webserver"]["final_redirect_url"]
+                    "redirect_url" => $this->config["auth"]["oauth"]["webserver"]["redirect_url"],
+                    "callback_url" => $this->config["auth"]["oauth"]["webserver"]["callback_url"]
                 );
                 break;
 
