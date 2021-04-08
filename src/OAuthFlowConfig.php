@@ -10,6 +10,10 @@ class OAuthFlowConfig {
 
     private $securityToken;
 
+    private $authorizationUrl;
+
+    private $authorizationRedirectUrl;
+
     public function __construct($config){
 
         $this->username = $config["username"];
@@ -32,5 +36,20 @@ class OAuthFlowConfig {
     public function getSecurityToken(){
 
         return $this->securityToken;
+    }
+
+    public function getPasswordWithSecurityToken(){
+
+        return $this->password . $this->securityToken;
+    }
+
+    public function getAuthorizationUrl(){
+
+        return $this->authorizationUrl;
+    }
+
+    public function getAuthorizationRedirect(){
+
+        return $this->authorizationRedirect;
     }
 }

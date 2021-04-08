@@ -15,10 +15,6 @@ class OAuthConfig {
     private $clientId;
 
     private $clientSecret;
-    
-    private $authorizationUrl;
-
-    private $authorizationRedirectUrl;
 
     private $callbackUrl;
 
@@ -33,7 +29,7 @@ class OAuthConfig {
         $this->sandbox = $config["sandbox"];
         $this->clientId = $config["client_id"];
         $this->clientSecret = $config["client_secret"];
-        $this->tokenUrl = $config["oauth_url"];
+        $this->tokenUrl = $config["token_url"];
 
         $this->callbackUrl = $config["callback_url"];
 
@@ -42,9 +38,9 @@ class OAuthConfig {
     public function getFlowConfig($flow = "usernamepassword"){
 
         $tmp = array(
-            "username" => $this->config["username"],
-            "password" => $this->config["password"],
-            "securityToken" => $this->config["security_token"]
+            "username" => $this->config["auth"]["oauth"]["username_password"]["username"],
+            "password" => $this->config["auth"]["oauth"]["username_password"]["password"],
+            "securityToken" => $this->config["auth"]["oauth"]["username_password"]["security_token"]
         );
 
         return new OAuthFlowConfig($tmp);
@@ -61,21 +57,6 @@ class OAuthConfig {
     public function getName(){
 
         return $this->name;
-    }
-
-    public function getPasswordWithSecurityToken(){
-
-        return $this->password . $this->securityToken;
-    }
-
-    public function getAuthorizationEndpoint(){
-
-        return $this->authorizationEndpoint;
-    }
-
-    public function getAuthorizationRedirect(){
-
-        return $this->authorizationRedirect;
     }
 
     public function getCallbackUrl(){
