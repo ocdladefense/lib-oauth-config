@@ -16,9 +16,7 @@ class OAuthConfig {
 
     private $clientSecret;
 
-    private $callbackUrl;
-
-    private $tokenUrl;
+    private $authorizationCode;
 
 
     public function __construct($config){
@@ -29,39 +27,40 @@ class OAuthConfig {
         $this->sandbox = $config["sandbox"];
         $this->clientId = $config["client_id"];
         $this->clientSecret = $config["client_secret"];
-        $this->tokenUrl = $config["token_url"];
-
-        $this->callbackUrl = $config["callback_url"];
-
     }
 
     public function getFlowConfig($flow = "usernamepassword"){
 
-        $tmp = array(
-            "username" => $this->config["auth"]["oauth"]["username_password"]["username"],
-            "password" => $this->config["auth"]["oauth"]["username_password"]["password"],
-            "securityToken" => $this->config["auth"]["oauth"]["username_password"]["security_token"]
-        );
+        $flowConfigs = $this->config["auth"]["oauth"];
+
+        switch($flow){
+            
+            case "usernamepassword":
+                $tmp = array(
+                    "username" => $flowConfigs["usernamepassword"]["username"],
+                    "password" => $flowConfigs["usernamepassword"]["password"],
+                    "securityToken" => $flowConfigs["usernamepassword"]["security_token"],
+                    "token_url"     => $flowConfigs["usernamepassword"]["token_url"]
+                );
+                break;
+            case "webserver":
+                $tmp = array(
+                    "auth_url" => $flowConfigs["webserver"]["auth_url"],
+                    "redirect_url" => $flowConfigs["webserver"]["redirect_url"],
+                    "callback_url" => $flowConfigs["webserver"]["callback_url"],
+                    "token_url"     => $flowConfigs["webserver"]["token_url"]
+                );
+                break;
+
+        }
 
         return new OAuthFlowConfig($tmp);
 
     }
 
-    public static function fromFlow($config, $flow){
-
-        $oauthConfig = new self($config);
-        
-        return $oauthConfig->newFromFlow($oauthConfig, $flow);
-    }
-
     public function getName(){
 
         return $this->name;
-    }
-
-    public function getCallbackUrl(){
-
-        return $this->callbackUrl;
     }
 
     public function getClientId(){
@@ -74,49 +73,18 @@ class OAuthConfig {
         return $this->clientSecret;
     }
 
-    public function getTokenUrl(){
-
-        return $this->tokenUrl;
-    }
-
     public function getConfig(){
 
         return $this->config;
     }
 
-    public function newFromFlow($oauthConfig, $flow){
+    public function getAuthorizationCode(){
 
-
-
-        switch($flow) {
-
-            case "usernamePassword":
-                return $this->usernamePasswordFlow($oauthConfig, $flowConfig);
-                break;
-            case "webserver":
-                return $this->webserverFlow($oauthConfig, $flowConfig);
-                break;
-            default:
-                throw new \Exception("OAUTH_CONFIG_ERROR:   No functionality for given config.");
-        }
-
+        return $this->authorizationCode;
     }
 
-    public function usernamePasswordFlow($oauthConfig, $flowConfig){
+    public function setAuthorizationCode($code){
 
-        $oauthConfig->username = $flowConfig["username"];
-        $oauthConfig->password = $flowConfig["password"];
-        $oauthConfig->securityToken = $flowConfig["security_token"];
-        $oauthConfig->callbackUrl = $flowConfig["callback_url"];
-
-        return $oauthConfig;
-    }
-
-    public function webServerFlow($oauthConfig, $flowConfig){
-
-        $oauthConfig->authorizationUrl = $flowConfig["auth_url"];
-        $oauthConfig->authorizationRedirectUrl = $flowConfig["auth_redirect_url"];
-        $oauthConfig->callbackUrl = $flowConfig["final_redirect_url"];
-        return $oauthConfig;
+        $this->authorizationCode = $code;
     }
 }
