@@ -1,7 +1,5 @@
 <?php
 
-namespace Salesforce;
-
 class OAuthFlowConfig {
 
     private $username;
