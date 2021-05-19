@@ -1,7 +1,5 @@
 <?php
 
-namespace Salesforce;
-
 class OAuthConfig {
 
     private $config;
@@ -9,8 +7,6 @@ class OAuthConfig {
     private $name;
 
     private $default;
-
-    private $sandbox;
 
     private $clientId;
 
