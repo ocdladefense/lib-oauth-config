@@ -42,8 +42,8 @@ class OAuthConfig {
             case "webserver":
                 $tmp = array(
                     "auth_url" => $flowConfigs["webserver"]["auth_url"],
-                    "redirect_url" => $flowConfigs["webserver"]["redirect_url"],
                     "callback_url" => $flowConfigs["webserver"]["callback_url"],
+                    "destination_url" => $flowConfigs["webserver"]["destination_url"],
                     "token_url"     => $flowConfigs["webserver"]["token_url"]
                 );
                 break;
