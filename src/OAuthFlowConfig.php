@@ -2,6 +2,8 @@
 
 class OAuthFlowConfig {
 
+    private $name;
+
     private $username;
 
     private $password;
@@ -16,14 +18,20 @@ class OAuthFlowConfig {
 
     private $destinationUrl;
 
+    private $domain;
+
+
+
     public function __construct($config){
 
         $this->username = $config["username"];
         $this->password = $config["password"];
-        $this->securityToken = $config["securityToken"];
+        $this->securityToken = $config["security_token"];
         $this->authorizationUrl = $config["auth_url"];
+        $this->tokenUrl = $config["token_url"];
         $this->callbackUrl = $config["callback_url"];
         $this->destinationUrl = $config["destination_url"];
+        
 
         if($config["oauth_url"] != null){
             
@@ -77,5 +85,25 @@ class OAuthFlowConfig {
     public function getTokenUrl(){
 
         return $this->tokenUrl;
+    }
+
+    public function getName(){
+
+        return $this->name;
+    }
+
+    public function getDomain() {
+
+        return $this->domain;
+    }
+
+    public function setName($name){
+
+        $this->name = $name;
+    }
+    
+    public function setDomain($domain) {
+
+        $this->domain = $domain;
     }
 }

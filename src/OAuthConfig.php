@@ -2,7 +2,7 @@
 
 class OAuthConfig {
 
-    private $config;
+    private static $config;
 
     private $name;
 
@@ -17,7 +17,7 @@ class OAuthConfig {
 
     public function __construct($config){
 
-        $this->config = $config;
+        self::$config = $config;
         $this->name = $config["name"];
         $this->default = $config["default"];
         $this->sandbox = $config["sandbox"];
@@ -25,32 +25,22 @@ class OAuthConfig {
         $this->clientSecret = $config["client_secret"];
     }
 
-    public function getFlowConfig($flow = "usernamepassword"){
+    public function getFlowConfig($name = "usernamepassword", $domain = "default"){
 
-        $flowConfigs = $this->config["auth"]["oauth"];
+        $config = self::parseFlowConfig($name, $domain);
 
-        switch($flow){
-            
-            case "usernamepassword":
-                $tmp = array(
-                    "username" => $flowConfigs["usernamepassword"]["username"],
-                    "password" => $flowConfigs["usernamepassword"]["password"],
-                    "securityToken" => $flowConfigs["usernamepassword"]["security_token"],
-                    "token_url"     => $flowConfigs["usernamepassword"]["token_url"]
-                );
-                break;
-            case "webserver":
-                $tmp = array(
-                    "auth_url" => $flowConfigs["webserver"]["auth_url"],
-                    "callback_url" => $flowConfigs["webserver"]["callback_url"],
-                    "destination_url" => $flowConfigs["webserver"]["destination_url"],
-                    "token_url"     => $flowConfigs["webserver"]["token_url"]
-                );
-                break;
+        $flow = new OAuthFlowConfig($config);
+        $flow->setName($name);
+        $flow->setDomain($domain);
 
-        }
+        return $flow;
+    }
 
-        return new OAuthFlowConfig($tmp);
+    public static function parseFlowConfig($name = "usernamepassword", $domain = "default") {
+
+        $flowConfigs = self::$config["auth"]["oauth"];
+
+        return $flowConfigs[$name][$domain];
 
     }
 
